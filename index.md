@@ -1,0 +1,1 @@
+[现代化web应用架构及实践](https://kuitos.github.io/takahashi-slides/?modern-webapp-architecture)
