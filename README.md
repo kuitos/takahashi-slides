@@ -8,6 +8,8 @@ fork from [hax github blog](https://github.com/hax/hax.github.com)
 
 老罗同款，不容错过。
 
+*仅支持 Chrome 45+ 浏览器*
+
 ## How to use
 
 1. fork 本项目
