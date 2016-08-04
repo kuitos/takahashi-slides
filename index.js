@@ -1,4 +1,4 @@
-takahashi(location.search.slice(1) + '.md')
+takahashi(location.search.slice(1) + '/index.md')
 
 function takahashi(markdownUrl) {
 	fetch(markdownUrl)
