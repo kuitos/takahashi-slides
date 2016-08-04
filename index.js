@@ -1,4 +1,13 @@
-takahashi(location.search.slice(1) + '/index.md')
+const SEARCH_DIR = location.search.slice(1)
+let path = ''
+
+if (SEARCH_DIR){
+	path = SEARCH_DIR + '/index.md'
+} else {
+	path = 'index.md'
+}
+
+takahashi(path)
 
 function takahashi(markdownUrl) {
 	fetch(markdownUrl)
