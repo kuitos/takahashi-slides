@@ -156,7 +156,7 @@ void function() {
 		controls.style.left = '0'
 		controls.style.right = '0'
 		controls.style.color = 'gray'
-		controls.style.opacity = '0.6'
+		controls.style.opacity = '0.8'
 		controls.innerHTML = '<button class="prev" style="width: 38%; height: 48px">&lt;</button><button class="next" style="width: 61%; height: 48px">&gt;</button>'
 		document.body.appendChild(controls)
 		controls.addEventListener('click', event => {
@@ -173,21 +173,25 @@ void function() {
 			// console.log(kbEvent.key, kbEvent.keyIdentifier, kbEvent.keyCode)
 			if (kbEvent.key) {
 				switch (kbEvent.key) {
-					case 'ArrowRight':	case 'ArrowDown':	case 'PageDown':	nextSlide();	break
-					case 'ArrowLeft':	case 'ArrowUp':	case 'PageUp':	prevSlide();	break
+					case 'ArrowRight':	case 'ArrowDown':	case 'PageDown':	nextSlide();	hideControls();	break
+					case 'ArrowLeft':	case 'ArrowUp':	case 'PageUp':	prevSlide();	hideControls();	break
 				}
 			} else if (kbEvent.keyIdentifier) {
 				switch (kbEvent.keyIdentifier) {
-					case 'Right':	case 'Down':	nextSlide();	break
-					case 'Left':	case 'Up':	prevSlide();	break
+					case 'Right':	case 'Down':	nextSlide();	hideControls();	break
+					case 'Left':	case 'Up':	prevSlide();	hideControls();	break
 				}
 			} else {
 			}
 		}
 	}
 
+	function hideControls() {
+		document.querySelector('div.controls').style.opacity = '0'
+	}
+
 	function initSlide() {
-		if (gotoSlide(parseInt(location.hash.slice(1))) || gotoSlide(0)) pushState()
+		if (gotoSlide(parseInt(location.hash.slice(1))) || gotoSlide(0)) updateState()
 	}
 
 	function current() {
@@ -208,13 +212,13 @@ void function() {
 			return
 		}
 		const next = curr.nextElementSibling
-		if (next && next.matches('.slide')) showSlide(slideIndex + 1, next, curr) && pushState()
+		if (next && next.matches('.slide')) showSlide(slideIndex + 1, next, curr) && updateState()
 	}
 
 	function prevSlide() {
 		const curr = current()
 		const prev = curr.previousElementSibling
-		if (prev && prev.matches('.slide')) showSlide(slideIndex - 1, prev, curr) && pushState()
+		if (prev && prev.matches('.slide')) showSlide(slideIndex - 1, prev, curr) && updateState()
 	}
 
 	function showSlide(index, element, old) {
@@ -234,8 +238,8 @@ void function() {
 	}
 
 	let slideIndex
-	function pushState() {
-		history.pushState(slideIndex, '', `#${slideIndex}`)
+	function updateState() {
+		history.replaceState(slideIndex, '', `#${slideIndex}`)
 	}
 
 	function adjustCurrentSlide() {
@@ -259,7 +263,7 @@ void function() {
 		for (const e of c.children) {
 			if (isReplacedElement(e)) {
 				e.style.width = w + 'px'
-			} else {
+			} else if (c.childElementCount > 1) {
 				e.style.fontSize = '1rem'
 				e.style.fontSize = `${w / e.scrollWidth / 2}rem`
 			}
